@@ -8,13 +8,13 @@ const TOTAL_NUM_POKEMON = 893;
 class Game extends React.Component {
   constructor(props: any) {
     super(props);
-    this.state = {imageURL: null};
+    this.state = {imageURL: null, silhouette: true};
   }
 
   async newPokemon() {
     let imageURL = null;
     
-    this.setState({imageURL: loading});
+    this.setState({imageURL: loading, silhouette: false});
     while (!imageURL) {
       const randomNumber = Math.floor(Math.random() * TOTAL_NUM_POKEMON);
       const endpoint = `https://pokeapi.co/api/v2/pokemon/${randomNumber}`;
@@ -23,14 +23,19 @@ class Game extends React.Component {
       imageURL = data.sprites.other["official-artwork"].front_default;
     }
     console.log(imageURL);
-    this.setState({imageURL});
+    this.setState({imageURL, silhouette: true});
   }
 
   render() {
+    const style: React.CSSProperties = {
+      filter: "contrast(0) brightness(0)"
+    }
     return (
       <div className="App">
-        <img alt="" src={this.state.imageURL}></img>
+        <img className="image" style={this.state.silhouette ? style : undefined} alt="" src={this.state.imageURL}></img>
         <button className="start" onClick={() => this.newPokemon()}>Start Game</button>
+        <button className="start" onClick={() => this.setState({silhouette: false})}>Reveal</button>
+
       </div>
     );  
   }
