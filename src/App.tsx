@@ -5,10 +5,10 @@ import loading from './loading.gif';
 
 const TOTAL_NUM_POKEMON = 893;
 
-class Game extends React.Component {
+class Game extends React.Component<{}, {imageURL: string, silhouette: boolean}> {
   constructor(props: any) {
     super(props);
-    this.state = {imageURL: null, silhouette: true};
+    this.state = {imageURL: "", silhouette: true};
   }
 
   async newPokemon() {
